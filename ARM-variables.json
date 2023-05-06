@@ -1,0 +1,44 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "storageName":{
+        "type":"string",
+        "minLength":3,
+        "maxLength":24,
+        "metadata":{
+            "description":"unique name for storage account"
+        }
+    },
+    "storageSKU":{
+        "type":"string",
+        "allowedValues":[
+            "Standard_LRS",
+            "Standard_GRS"
+        ]
+    },
+    "environment": {
+        "type": "string",
+        "defaultValue":"Dev",
+        "allowedValues":["dev","qa","prod"],
+        "metadata":{
+            "description":"List of environments for deployment"
+        }
+    }
+  },
+  "variables":{
+        "storageName": "[concat(concat(parameters('storageName'),uniqueString(resourceGroup().id)),parameters('environment'))]"
+  },
+  "resources": [
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion":"2019-04-01",
+            "name": "[variables('storageName')]",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "[parameters('storageSKU')]"
+            },
+            "kind": "StorageV2"
+        }
+    ]
+}

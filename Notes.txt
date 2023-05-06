@@ -1,0 +1,13 @@
+https://learn.microsoft.com/en-us/azure/templates/
+https://github.com/MarczakIO/azure4everyone-samples/tree/master/azure-resourcemanager-templates-nested-linked
+
+
+ARM Templates Modularization using Nested and Linked Templates
+https://www.youtube.com/watch?v=96XxVyxrhZI&list=PLGjZwEtPN7j8_kgw92LHBrry2gnVc3NXQ&index=7
+
+In visual studio code install
+-	Azure reseource manager (ARM) Tools
+-	ARM template viewer
+In Azure 
+-	Create resource 
+-	Type Template deployment (deploy using custom templates)
