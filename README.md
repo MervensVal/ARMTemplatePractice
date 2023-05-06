@@ -1,2 +1,2 @@
 # ARMTemplatePractice
-Tutorial - Adam Marczak - Azure for Everyone (Youtube)
+Tutorial used - Adam Marczak - Azure for Everyone (Youtube)
