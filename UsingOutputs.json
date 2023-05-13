@@ -1,0 +1,64 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "StorageName": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 24,
+            "metadata": {
+                "description": "The name of the Azure storage resource"
+            }
+        },
+        "storageSKU": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_GRS",
+                "Standard_RAGRS",
+                "Standard_ZRS",
+                "Premium_LRS",
+                "Premium_ZRS",
+                "Standard_GZRS",
+                "Standard_RAGZRS"
+            ]
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "name": "[parameters('StorageName')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-06-01",
+            "tags": {
+                "displayName": "[parameters('storageName')]"
+            },
+            "location": "[resourceGroup().location]",
+            "kind": "StorageV2",
+            "sku": {
+                "name": "[parameters('storageSKU')]",
+                "tier": "Standard"
+            }
+        }
+    ],
+    "outputs": {
+        //Here, you add to the outputs section of the ARM template to output the endpoints for the storage account resource.
+        //Because we specified object as the type, it will return the object in JSON format
+        "storageEndpoint": {
+            "type": "object",
+            "value": "[reference(parameters('storageName')).primaryEndpoints]"
+        }
+    }
+}
+//deploying with powershell
+/*
+$today=Get-Date -Format "MM-dd-yyyy"
+$deploymentName="addSkuParameter-"+"$today"
+New-AzResourceGroupDeployment `
+  -Name $deploymentName `
+  -TemplateFile $templateFile `
+  -storageName {your-unique-name} `
+  -storageSKU Standard_GRS
+*/
